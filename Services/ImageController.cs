@@ -1,54 +1,76 @@
-using Android.Provider;
+using BackpackControllerApp.Enums;
+using BackpackControllerApp.Interfaces;
 using BackpackControllerApp.Models;
+using SkiaSharp;
+using IImageController = BackpackControllerApp.Interfaces.IImageController;
 
 namespace BackpackControllerApp.Services;
 
-public class ImageController
+public class ImageController : IImageController
 {
-    private readonly MediatorController _mediatorController;
+    private readonly ILoggingService _loggingService;
 
-    public ImageController(MediatorController mediatorController)
+    public ImageController(ILoggingService loggingService)
     {
-        _mediatorController = mediatorController;
+        _loggingService = loggingService;
 
-        _mediatorController.OnFileResult += async (file) => { await processFile(file); };
+        _loggingService.Log(LogLevel.Info, "ImageController initialized", "ImageController");
     }
 
-    public async Task processFile(FileResult fileResult)
+    private async Task<Stream> createImageThumbnail(FileResult fileResult)
     {
+        _loggingService.Log(LogLevel.Info, "Creating thumbnail", "ImageController");
+
+        await using var stream = await fileResult.OpenReadAsync();
+        using var image = SKBitmap.Decode(stream);
+        var thumbnail = image.Resize(new SKImageInfo(100, 100), SKSamplingOptions.Default);
+        using var thumbnailImage = SKImage.FromBitmap(thumbnail);
+        var finalThumbnail = thumbnailImage.Encode(SKEncodedImageFormat.Jpeg, 100);
+        return finalThumbnail.AsStream();
+    }
+
+    private async Task<byte[]> createVideoThumbnail(FileResult fileResult)
+    {
+        _loggingService.Log(LogLevel.Info, "Creating video thumbnail", "ImageController");
+        return [];
+    }
+
+    private async Task<FileResult> processVideo(FileResult fileResult)
+    {
+        _loggingService.Log(LogLevel.Info, "Processing video", "ImageController");
+        return fileResult;
+    }
+
+    private async Task<FileResult> processImage(FileResult fileResult)
+    {
+        _loggingService.Log(LogLevel.Info, "Processing image", "ImageController");
+        return fileResult;
+    }
+
+    public async Task<ProcessedFile> ProcessFile(FileResult fileResult)
+    {
+        var temp = new ProcessedFile();
+
         if (fileResult.ContentType.Contains("image"))
         {
-            await processImage(fileResult);
-            await createThumbnail(fileResult);
+            _loggingService.Log(LogLevel.Info, "Processing image", "ImageController");
+            temp.Type = "image";
+            var processedImage = await processImage(fileResult);
+            temp.FileTask = processedImage.OpenReadAsync();
+            var thumbnailData = createImageThumbnail(fileResult);
+            temp.ThumbnailTask = thumbnailData;
+            return temp;
         }
-
-        if (fileResult.ContentType.Contains("video"))
+        else if (fileResult.ContentType.Contains("video"))
         {
-            await processVideo(fileResult);
-            await createThumbnail(fileResult);
+            temp.Type = "video";
+            _loggingService.Log(LogLevel.Info, "Processing video", "ImageController");
+            _loggingService.Log(LogLevel.Warning, "Video processing not supported yet", "ImageController");
+            return temp; //not supported for now
         }
-    }
-    
-    private async Task createThumbnail(FileResult fileResult)
-    {
-        var res = BackpackControllerApp.Configuration.Settings.Instance.ScreenResolution;
-       //process later 
-        _mediatorController.OnThumbnailCreated(fileResult);
-    }
 
-    private async Task processVideo(FileResult fileResult)
-    {
-        var res = BackpackControllerApp.Configuration.Settings.Instance.ScreenResolution;
-        //process later
-        _mediatorController.OnProcessedFile(fileResult);
-        
-    }
+        _loggingService.Log(LogLevel.Error, "Unsupported file type", "ImageController");
 
-    private async Task processImage(FileResult fileResult)
-    {
-         var res = BackpackControllerApp.Configuration.Settings.Instance.ScreenResolution; 
-         //process later
-         _mediatorController.OnProcessedFile(fileResult);
-         
+        return temp;
     }
 }

@@ -1,6 +1,11 @@
+using System.Collections.ObjectModel;
+using BackpackControllerApp.Enums;
+using BackpackControllerApp.Interfaces;
+using BackpackControllerApp.Models;
+
 namespace BackpackControllerApp.Services;
 
-public class StorageController
+public class StorageController : IStorageController
 {
     private static readonly string CommonDirectory =
         Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
@@ -9,36 +14,33 @@ public class StorageController
     private readonly string _thumbnailDirectory = Path.Combine(CommonDirectory, "Thumbnails");
     private readonly string _uploadedDirectory = Path.Combine(CommonDirectory, "Uploaded");
 
-    private readonly MediatorController _mediatorController;
+    private readonly ILoggingService _loggingService;
 
-    public StorageController(MediatorController mediatorController)
+    public ObservableCollection<string> Files { get; set; } = [];
+    public ObservableCollection<string> Thumbnails { get; set; } = [];
+
+    public StorageController(ILoggingService loggingService)
     {
-        _mediatorController = mediatorController;
-        _mediatorController.OnFileProcessed += async (file) =>
-        {
-            await SaveFile(file, _uploadedDirectory);
-
-            var files = Directory.GetFiles(_uploadedDirectory).Select(x => Path.Combine(_uploadedDirectory, x))
-                .ToList();
-            _mediatorController.OnFileSaved(files);
-        };
-        _mediatorController.OnThumbnailProcessed += async (file) =>
-        {
-            await SaveFile(file, _thumbnailDirectory);
-            
-            var files = Directory.GetFiles(_thumbnailDirectory).Select(x => Path.Combine(_uploadedDirectory, x))
-                .ToList();
-            _mediatorController.OnThumbnailSaved(files);
-        };
+        _loggingService = loggingService;
+        _loggingService.Log(LogLevel.Info, "StorageController initialized", "StorageController");
     }
 
-    private async Task SaveFile(FileResult file, string location)
+    public async Task SaveFile(ProcessedFile file)
     {
-        await using var stream = await file.OpenReadAsync();
-        using var memoryStream = new MemoryStream();
-        await stream.CopyToAsync(memoryStream);
-        var bytes = memoryStream.ToArray();
-        var filePath = Path.Combine(location, file.FileName);
-        await File.WriteAllBytesAsync(filePath, bytes);
+        _loggingService.Log(LogLevel.Info, "Saving file", "StorageController");
+
+        using var fileStream = file.FileTask;
+        using var thumbnailStream = file.ThumbnailTask;
+
+        var newFile = new FileInfo(Path.Combine(_uploadedDirectory, file.Name.ToString()));
+        var newThumbnail = new FileInfo(Path.Combine(_thumbnailDirectory, file.Name.ToString()));
+
+        var a = (await fileStream).CopyToAsync(newFile.OpenWrite());
+        var b = (await thumbnailStream).CopyToAsync(newThumbnail.OpenWrite());
+
+        await Task.WhenAll(a, b);
+
+        Files.Add(newFile.FullName);
+        Thumbnails.Add(newThumbnail.FullName);
     }
 }

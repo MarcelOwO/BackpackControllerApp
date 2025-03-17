@@ -36,6 +36,18 @@ build_metadata.AdditionalFiles.ManifestResourceName = BackpackControllerApp.Main
 build_metadata.AdditionalFiles.TargetPath = MainPage.xaml
 build_metadata.AdditionalFiles.RelativePath = MainPage.xaml
 
+[/home/marcel/RiderProjects/BackpackControllerApp/Pages/LogPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = BackpackControllerApp.Pages.LogPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Pages/LogPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Pages/LogPage.xaml
+
+[/home/marcel/RiderProjects/BackpackControllerApp/Pages/SettingsPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = BackpackControllerApp.Pages.SettingsPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Pages/SettingsPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Pages/SettingsPage.xaml
+
 [/home/marcel/RiderProjects/BackpackControllerApp/Resources/Styles/Colors.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = BackpackControllerApp.Resources.Styles.Colors.xaml

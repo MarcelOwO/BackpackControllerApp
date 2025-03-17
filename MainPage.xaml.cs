@@ -1,78 +1,45 @@
-﻿using BackpackControllerApp.Models;
+﻿using BackpackControllerApp.Enums;
+using BackpackControllerApp.Interfaces;
 using BackpackControllerApp.Services;
+using BackpackControllerApp.Views;
 
 namespace BackpackControllerApp;
 
 public partial class MainPage : ContentPage
 {
-    private string _selectedImages = "";
     private readonly MediatorController _mediatorController;
 
-    public string BluetoothStatus { get; set; } = "";
-    public List<ImageItem> UploadedFiles { get; set; }
+    private readonly ILoggingService _loggingService;
 
-
-    public MainPage(MediatorController mediatorController)
+    public MainPage(MediatorController mediatorController, ILoggingService loggingService)
     {
         InitializeComponent();
 
+        _loggingService = loggingService;
         _mediatorController = mediatorController;
 
-        UploadedFiles = [];
+        BindingContext = new MainView(mediatorController);
 
-        _mediatorController.OnConnectionChanged += status => BluetoothStatus = status;
-        _mediatorController.OnDisplayedChanged += file => _selectedImages = file;
-
-        Task.Run(async () => await UpdateLocalData());
-    }
-
-    private async Task TryConnect()
-    {
-        await _mediatorController.TryConnect();
+        _loggingService.Log(LogLevel.Info, "MainPage initialized", "MainPage");
     }
 
     private void OnImageClicked(string obj)
     {
+        _loggingService.Log(LogLevel.Info, "Image clicked", "MainPage");
         _mediatorController.SetDisplayed(obj);
-    }
-
-    private async Task UploadFile(string fileName)
-    {
-#pragma warning disable CA1416
-        var file = await MediaPicker.PickPhotoAsync(new MediaPickerOptions { Title = "Select File" });
-#pragma warning restore CA1416
-
-        if (file == null) return;
-
-        _mediatorController.AddFile(file);
-
-        return;
     }
 
     private void SetDisplayed(string fileName)
     {
+        _loggingService.Log(LogLevel.Info, "Setting displayed image", "MainPage");
+
         _mediatorController.SetDisplayed(fileName);
     }
 
-    private async Task UpdateLocalData()
+    private async void Upload(object? sender, EventArgs e)
     {
-        _mediatorController.waitForConnection();
-        _selectedImages = await _mediatorController.GetDisplayed();
-        UploadedFiles = await _mediatorController.GetUploaded();
-    }
+        _loggingService.Log(LogLevel.Info, "Upload button clicked", "MainPage");
 
-    private void UploadFile(object? sender, EventArgs e)
-    {
-        Task.Run(() => UploadFile(_selectedImages));
-    }
-
-    private void Button_OnClicked(object? sender, EventArgs e)
-    {
-        SetDisplayed(_selectedImages);
-    }
-
-    private void TryConnect(object? sender, TappedEventArgs e)
-    {
-        Task.Run(async () => await TryConnect());
+        await _mediatorController.AddFile();
     }
 }

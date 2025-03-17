@@ -1,94 +1,61 @@
-using BackpackControllerApp.Models;
-using Plugin.BLE.Abstractions.Contracts;
-using Plugin.BLE.Abstractions.EventArgs;
+using System.Collections.ObjectModel;
+using BackpackControllerApp.Enums;
+using BackpackControllerApp.Interfaces;
+using IImageController = BackpackControllerApp.Interfaces.IImageController;
 
 namespace BackpackControllerApp.Services;
 
 public class MediatorController
 {
-    public MediatorController()
+    private readonly ILoggingService _loggingService;
+    private readonly IBluetoothController _bluetoothController;
+    private readonly IStorageController _storageController;
+    private readonly IImageController _imageController;
+
+    public ObservableCollection<string> Files => _storageController.Files;
+    public ObservableCollection<string> Thumbnails => _storageController.Thumbnails;
+
+    public MediatorController(ILoggingService loggingService, IBluetoothController bluetoothController,
+        IStorageController storageController, IImageController imageController)
     {
+        _loggingService = loggingService;
+
+        _bluetoothController = bluetoothController;
+        _storageController = storageController;
+        _imageController = imageController;
+
+        _loggingService.Log(LogLevel.Info, "MediatorController initialized", "MediatorController");
     }
 
-    public event Action<string>? OnDisplayedChanged;
+    public string BluetoothStatus => _bluetoothController.IsConnected;
+    public string SelectedImage { get; set; }
 
     public void SetDisplayed(string fileName)
     {
-        OnDisplayedChanged?.Invoke(fileName);
-    }
-
-    public event Action<string>? OnConnectionChanged;
-
-    public void waitForConnection()
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<string> GetDisplayed()
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<List<ImageItem>> GetUploaded()
-    {
-        throw new NotImplementedException();
+        _loggingService.Log(LogLevel.Info, "Setting displayed image", "MediatorController");
     }
 
     public async Task TryConnect()
     {
-        throw new NotImplementedException();
+        _loggingService.Log(LogLevel.Info, "Trying to connect", "MediatorController");
     }
 
-    public void BluetoothConnectionChanged(object? sender, BluetoothStateChangedArgs e)
+    public async Task AddFile()
     {
-#pragma warning disable CA1416
-        OnConnectionChanged?.Invoke(e.NewState.ToString());
-#pragma warning restore CA1416
-    }
+        _loggingService.Log(LogLevel.Info, "Adding file", "MediatorController");
+        
+        var file = await MediaPicker.PickPhotoAsync(new MediaPickerOptions { Title = "Select File" });
 
-    public void SetState(BluetoothState bluetoothLeState)
-    {
-        OnConnectionChanged?.Invoke(bluetoothLeState.ToString());
-    }
+        if (file == null)
+        {
+            _loggingService.Log(LogLevel.Warning, "No file selected", "MainPage");
+            return;
+        }
 
-    public event Action<FileResult>? OnFileResult;
+        var processedFile = await _imageController.ProcessFile(file);
 
-    public void AddFile(FileResult fileResult)
-    {
-#pragma warning disable CA1416
-        OnFileResult?.Invoke(fileResult);
-#pragma warning restore CA1416
-    }
+        processedFile.Name = Guid.NewGuid();
 
-    public event Action<FileResult>? OnFileProcessed;
-
-    public void OnProcessedFile(FileResult fileResult)
-    {
-#pragma warning disable CA1416
-        OnFileProcessed?.Invoke(fileResult);
-#pragma warning restore CA1416
-    }
-
-    public event Action<FileResult>? OnThumbnailProcessed;
-
-    public void OnThumbnailCreated(FileResult fileResult)
-    {
-#pragma warning disable CA1416
-        OnThumbnailProcessed?.Invoke(fileResult);
-#pragma warning restore CA1416
-    }
-
-    public event Action<List<string>>? OnFilesUpdated;
-
-    public void OnFileSaved(List<string> files)
-    {
-        OnFilesUpdated?.Invoke(files.ToList());
-    }
-
-    public event Action<List<string>>? OnThumbnailsUpdated;
-
-    public void OnThumbnailSaved(List<string> thumnails)
-    {
-        OnThumbnailsUpdated?.Invoke(thumnails.ToList());
+        await _storageController.SaveFile(processedFile);
     }
 }

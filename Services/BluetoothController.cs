@@ -1,72 +1,34 @@
+using BackpackControllerApp.Enums;
+using BackpackControllerApp.Interfaces;
 using Plugin.BLE;
 using Plugin.BLE.Abstractions.Contracts;
 
 namespace BackpackControllerApp.Services;
 
-public class BluetoothController
+public class BluetoothController : IBluetoothController
 {
-    public bool IsConnected { get; set; }
-
+    public string IsConnected { get; set; }
     private readonly IBluetoothLE _bluetoothLe;
     private readonly IAdapter _adapter;
     private IDevice _connectedDevice;
-    
-    private readonly MediatorController _mediatorController;
+    private readonly ILoggingService _loggingService;
 
-    public BluetoothController(MediatorController mediatorController)
+    public event Action<string>? OnConnectionChanged;
+
+    public BluetoothController(ILoggingService loggingService)
     {
-        _mediatorController = mediatorController;
-        
+        _loggingService = loggingService;
+
         _bluetoothLe = CrossBluetoothLE.Current;
         _adapter = CrossBluetoothLE.Current.Adapter;
-        
-        _mediatorController.SetState(_bluetoothLe.State);
-        _bluetoothLe.StateChanged += _mediatorController.BluetoothConnectionChanged;
-        
-    }
 
-    public async Task ConnectToDevice(IDevice device)
-    {
-        await _adapter.ConnectToDeviceAsync(device);
-        _connectedDevice = device;
+        _bluetoothLe.StateChanged += (state, e) => IsConnected = e.NewState.ToString();
+
+        loggingService.Log(LogLevel.Info, "BluetoothController initialized", "BluetoothController");
     }
     
     
     
     
-
-    public void SetDisplayed()
-    {
-    }
-
-    public async Task UploadFile(string filePath)
-    {
-        if (_connectedDevice == null)
-        {
-            return;
-        }
-
-        var service = await _connectedDevice.GetServiceAsync(Guid.Parse("Test"));
-
-        if (service == null)
-        {
-            return;
-        }
-        
-        var characteristic = await service.GetCharacteristicAsync(Guid.Parse("Test"));
-
-        if (characteristic == null)
-        {
-            return;
-        }
-        var fileData = File.ReadAllBytes(filePath);
-        
-        var chunkSize = 20;
-        for (int i = 0; i < fileData.Length; i += chunkSize)
-        {
-            var chunk = fileData.Skip(i).Take(chunkSize).ToArray();
-            await characteristic.WriteAsync(chunk);
-        }
-
-    }
+    
 }

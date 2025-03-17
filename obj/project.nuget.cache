@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "Fby3itPWDkw=",
+  "dgSpecHash": "7pCHmsBvAXY=",
   "success": true,
   "projectFilePath": "/home/marcel/RiderProjects/BackpackControllerApp/BackpackControllerApp.csproj",
   "expectedPackageFiles": [
+    "/home/marcel/.nuget/packages/ffmpeg.autogen/7.0.0/ffmpeg.autogen.7.0.0.nupkg.sha512",
     "/home/marcel/.nuget/packages/googlegson/2.11.0.3/googlegson.2.11.0.3.nupkg.sha512",
     "/home/marcel/.nuget/packages/microsoft.extensions.configuration/9.0.0/microsoft.extensions.configuration.9.0.0.nupkg.sha512",
     "/home/marcel/.nuget/packages/microsoft.extensions.configuration.abstractions/9.0.0/microsoft.extensions.configuration.abstractions.9.0.0.nupkg.sha512",
@@ -22,8 +23,10 @@
     "/home/marcel/.nuget/packages/microsoft.maui.essentials/9.0.14/microsoft.maui.essentials.9.0.14.nupkg.sha512",
     "/home/marcel/.nuget/packages/microsoft.maui.graphics/9.0.14/microsoft.maui.graphics.9.0.14.nupkg.sha512",
     "/home/marcel/.nuget/packages/microsoft.maui.resizetizer/9.0.14/microsoft.maui.resizetizer.9.0.14.nupkg.sha512",
-    "/home/marcel/.nuget/packages/microsoft.net.illink.tasks/9.0.2/microsoft.net.illink.tasks.9.0.2.nupkg.sha512",
+    "/home/marcel/.nuget/packages/microsoft.net.illink.tasks/9.0.3/microsoft.net.illink.tasks.9.0.3.nupkg.sha512",
     "/home/marcel/.nuget/packages/plugin.ble/3.1.0/plugin.ble.3.1.0.nupkg.sha512",
+    "/home/marcel/.nuget/packages/skiasharp/3.118.0-preview.2.3/skiasharp.3.118.0-preview.2.3.nupkg.sha512",
+    "/home/marcel/.nuget/packages/skiasharp.nativeassets.android/3.118.0-preview.2.3/skiasharp.nativeassets.android.3.118.0-preview.2.3.nupkg.sha512",
     "/home/marcel/.nuget/packages/xamarin.android.glide/4.16.0.6/xamarin.android.glide.4.16.0.6.nupkg.sha512",
     "/home/marcel/.nuget/packages/xamarin.android.glide.annotations/4.16.0.6/xamarin.android.glide.annotations.4.16.0.6.nupkg.sha512",
     "/home/marcel/.nuget/packages/xamarin.android.glide.disklrucache/4.16.0.6/xamarin.android.glide.disklrucache.4.16.0.6.nupkg.sha512",
@@ -114,7 +117,9 @@
     "/home/marcel/.nuget/packages/xamarin.kotlinx.coroutines.core/1.8.1.3/xamarin.kotlinx.coroutines.core.1.8.1.3.nupkg.sha512",
     "/home/marcel/.nuget/packages/xamarin.kotlinx.coroutines.core.jvm/1.8.1.3/xamarin.kotlinx.coroutines.core.jvm.1.8.1.3.nupkg.sha512",
     "/home/marcel/.nuget/packages/xamarin.kotlinx.serialization.core/1.7.1.3/xamarin.kotlinx.serialization.core.1.7.1.3.nupkg.sha512",
-    "/home/marcel/.nuget/packages/xamarin.kotlinx.serialization.core.jvm/1.7.1.3/xamarin.kotlinx.serialization.core.jvm.1.7.1.3.nupkg.sha512"
+    "/home/marcel/.nuget/packages/xamarin.kotlinx.serialization.core.jvm/1.7.1.3/xamarin.kotlinx.serialization.core.jvm.1.7.1.3.nupkg.sha512",
+    "/home/marcel/.nuget/packages/microsoft.netcore.app.runtime.mono.android-arm64/9.0.3/microsoft.netcore.app.runtime.mono.android-arm64.9.0.3.nupkg.sha512",
+    "/home/marcel/.nuget/packages/microsoft.netcore.app.runtime.mono.android-x64/9.0.3/microsoft.netcore.app.runtime.mono.android-x64.9.0.3.nupkg.sha512"
   ],
   "logs": []
 }
