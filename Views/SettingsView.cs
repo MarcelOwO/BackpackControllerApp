@@ -1,12 +1,13 @@
+using Android.Service.Autofill;
 using BackpackControllerApp.Interfaces;
 
 namespace BackpackControllerApp.Views;
 
-public class SettingsView
+public class SettingsView  
 {
-    
     private readonly ISettingsService _settingsService;
     private readonly ILoggingService _loggingService;
+    
     
     public SettingsView(ILoggingService loggingService, ISettingsService settingsService)
     {

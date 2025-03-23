@@ -14,9 +14,8 @@
         <Style x:Key="MainBorder" TargetType="Border">
             <Setter Property="Margin" Value="10"/>
             <Setter Property="Padding" Value="10"/>
-            <Setter Property="StrokeShape" Value="RoundedRectangle"/>
+            <Setter Property="StrokeShape" Value="RoundRectangle"/>
             <Setter Property="StrokeThickness" Value="1"/>
-            <Setter Property="StrokeColor" Value="#333333"/>
         </Style>
     </Application.Resources>
 </Application>

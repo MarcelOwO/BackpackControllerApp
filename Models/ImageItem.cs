@@ -1,9 +1,9 @@
 namespace BackpackControllerApp.Models;
 
-public class ImageItem
+public class ImageItem(string id, string fileName, string filePath, string thumbnailPath)
 {
-    string ID { get; set; }
-    string fileName { get; set; }
-    string filePath { get; set; }
-    string thumbnailPath { get; set; }
+    private string Id { get; set; } = id;
+    private string FileName { get; set; } = fileName;
+    private string FilePath { get; set; } = filePath;
+    private string ThumbnailPath { get; set; } = thumbnailPath;
 }

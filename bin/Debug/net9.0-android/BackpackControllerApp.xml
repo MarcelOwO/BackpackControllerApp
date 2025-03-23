@@ -4,6 +4,11 @@
         <name>BackpackControllerApp</name>
     </assembly>
     <members>
+        <member name="T:BackpackControllerApp.Services.SettingsService">
+            <summary>
+            need to add settings like the id things for bluetooth and stuff like that. stuff still needs to be tested
+            </summary>
+        </member>
         <member name="T:BackpackControllerApp.Resource">
             <summary>
             Android Resource Designer class.

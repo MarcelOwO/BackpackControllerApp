@@ -7,22 +7,22 @@ namespace BackpackControllerApp.Services;
 
 public class BluetoothController : IBluetoothController
 {
-    public string IsConnected { get; set; }
     private readonly IBluetoothLE _bluetoothLe;
     private readonly IAdapter _adapter;
+    
     private IDevice _connectedDevice;
+    
     private readonly ILoggingService _loggingService;
+private readonly MediatorController _mediatorController;
 
-    public event Action<string>? OnConnectionChanged;
-
-    public BluetoothController(ILoggingService loggingService)
+    public BluetoothController(ILoggingService loggingService, MediatorController mediatorController)
     {
         _loggingService = loggingService;
-
+        _mediatorController = mediatorController;
+        
+        
         _bluetoothLe = CrossBluetoothLE.Current;
         _adapter = CrossBluetoothLE.Current.Adapter;
-
-        _bluetoothLe.StateChanged += (state, e) => IsConnected = e.NewState.ToString();
 
         loggingService.Log(LogLevel.Info, "BluetoothController initialized", "BluetoothController");
     }

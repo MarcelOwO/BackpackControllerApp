@@ -13,7 +13,7 @@
             <Border Style="{StaticResource MainBorder}">
                 <HorizontalStackLayout>
                     <Image
-                        Source="{Binding SelectedImage}"
+                        Source="{Binding SelectedImage }"
                         HeightRequest="185"
                         Aspect="AspectFit" />
                     <Label Text="{Binding BluetoothStatus}" />

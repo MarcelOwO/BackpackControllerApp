@@ -43,7 +43,7 @@ public class MediatorController
     public async Task AddFile()
     {
         _loggingService.Log(LogLevel.Info, "Adding file", "MediatorController");
-        
+
         var file = await MediaPicker.PickPhotoAsync(new MediaPickerOptions { Title = "Select File" });
 
         if (file == null)

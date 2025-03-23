@@ -17,7 +17,7 @@ public class ImageController : IImageController
         _loggingService.Log(LogLevel.Info, "ImageController initialized", "ImageController");
     }
 
-    private async Task<Stream> createImageThumbnail(FileResult fileResult)
+    private async Task<Stream> CreateImageThumbnail(FileResult fileResult)
     {
         _loggingService.Log(LogLevel.Info, "Creating thumbnail", "ImageController");
 
@@ -35,13 +35,13 @@ public class ImageController : IImageController
         return [];
     }
 
-    private async Task<FileResult> processVideo(FileResult fileResult)
+    private async Task<FileResult> ProcessVideo(FileResult fileResult)
     {
         _loggingService.Log(LogLevel.Info, "Processing video", "ImageController");
         return fileResult;
     }
 
-    private async Task<FileResult> processImage(FileResult fileResult)
+    private async Task<FileResult> ProcessImage(FileResult fileResult)
     {
         _loggingService.Log(LogLevel.Info, "Processing image", "ImageController");
         return fileResult;
@@ -49,28 +49,28 @@ public class ImageController : IImageController
 
     public async Task<ProcessedFile> ProcessFile(FileResult fileResult)
     {
-        var temp = new ProcessedFile();
-
         if (fileResult.ContentType.Contains("image"))
         {
             _loggingService.Log(LogLevel.Info, "Processing image", "ImageController");
-            temp.Type = "image";
-            var processedImage = await processImage(fileResult);
-            temp.FileTask = processedImage.OpenReadAsync();
-            var thumbnailData = createImageThumbnail(fileResult);
-            temp.ThumbnailTask = thumbnailData;
-            return temp;
+            const string type = "image";
+            var processedImage = await ProcessImage(fileResult);
+            var fileTask = processedImage.OpenReadAsync();
+            var thumbnailData = CreateImageThumbnail(fileResult);
+            return new ProcessedFile(type, fileTask, thumbnailData, Guid.NewGuid());
         }
         else if (fileResult.ContentType.Contains("video"))
         {
-            temp.Type = "video";
             _loggingService.Log(LogLevel.Info, "Processing video", "ImageController");
             _loggingService.Log(LogLevel.Warning, "Video processing not supported yet", "ImageController");
-            return temp; //not supported for now
+
+            var type = "video";
+            var emptyTask = new Task<Stream>(() => new MemoryStream());
+
+            return new ProcessedFile(type, emptyTask, emptyTask, Guid.NewGuid()); //not supported for now
         }
 
         _loggingService.Log(LogLevel.Error, "Unsupported file type", "ImageController");
-
-        return temp;
+        var emptyTask2 = new Task<Stream>(() => new MemoryStream());
+        return new ProcessedFile("Null", emptyTask2, emptyTask2, Guid.NewGuid());
     }
 }
