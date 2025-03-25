@@ -3,18 +3,22 @@
     x:Class="BackpackControllerApp.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:BackpackControllerApp"
-    xmlns:pages="clr-namespace:BackpackControllerApp.Pages"
-    Shell.FlyoutBehavior="Flyout"
+    xmlns:views="clr-namespace:BackpackControllerApp.Views"
+    FlyoutBehavior="Flyout"
     Title="BackpackControllerApp">
 
     <ShellContent
         Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
+        ContentTemplate="{DataTemplate views:MainPage}"
         Route="MainPage" />
     
     <ShellContent
         Title="Log"
-        ContentTemplate="{DataTemplate pages:LogPage}"
-        Route="Log"/>
+        ContentTemplate="{DataTemplate views:LogPage}"
+        Route="LogPage"/>
+    
+    <ShellContent
+       Title="Settings"
+       ContentTemplate="{DataTemplate views:SettingsPage}"
+       Route="SettingsPage" />
 </Shell>

@@ -1,7 +1,7 @@
 using System.Collections.ObjectModel;
 using BackpackControllerApp.Enums;
-using BackpackControllerApp.Interfaces;
 using BackpackControllerApp.Models;
+using BackpackControllerApp.Services.Interfaces;
 
 namespace BackpackControllerApp.Services;
 
