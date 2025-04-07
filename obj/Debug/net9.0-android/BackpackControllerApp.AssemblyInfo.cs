@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BackpackControllerApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+4402e5920913242c42f7e956eecbf50396460141")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+04a133ce098ed594dfe90c76fa16c26b6d0ed1fa")]
 [assembly: System.Reflection.AssemblyProductAttribute("BackpackControllerApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BackpackControllerApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

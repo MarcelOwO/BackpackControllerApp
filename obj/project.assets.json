@@ -443,19 +443,6 @@
           "build/Microsoft.NET.ILLink.Tasks.props": {}
         }
       },
-      "Plugin.BLE/3.1.0": {
-        "type": "package",
-        "compile": {
-          "lib/net8.0-android34.0/Plugin.BLE.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "runtime": {
-          "lib/net8.0-android34.0/Plugin.BLE.dll": {
-            "related": ".pdb;.xml"
-          }
-        }
-      },
       "SkiaSharp/3.118.0-preview.2.3": {
         "type": "package",
         "dependencies": {
@@ -2857,19 +2844,6 @@
           "build/Microsoft.NET.ILLink.Tasks.props": {}
         }
       },
-      "Plugin.BLE/3.1.0": {
-        "type": "package",
-        "compile": {
-          "lib/net8.0-android34.0/Plugin.BLE.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "runtime": {
-          "lib/net8.0-android34.0/Plugin.BLE.dll": {
-            "related": ".pdb;.xml"
-          }
-        }
-      },
       "SkiaSharp/3.118.0-preview.2.3": {
         "type": "package",
         "dependencies": {
@@ -5254,19 +5228,6 @@
         "type": "package",
         "build": {
           "build/Microsoft.NET.ILLink.Tasks.props": {}
-        }
-      },
-      "Plugin.BLE/3.1.0": {
-        "type": "package",
-        "compile": {
-          "lib/net8.0-android34.0/Plugin.BLE.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "runtime": {
-          "lib/net8.0-android34.0/Plugin.BLE.dll": {
-            "related": ".pdb;.xml"
-          }
         }
       },
       "SkiaSharp/3.118.0-preview.2.3": {
@@ -8366,62 +8327,6 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "Plugin.BLE/3.1.0": {
-      "sha512": "vKwCqysb0FvPsF2pmNL5Qdw2WI+GwlUyF6U56Au6F7y3f2cnhec9RWD1XZg74zRk10LcGibwiRXoJLl5ry8XHw==",
-      "type": "package",
-      "path": "plugin.ble/3.1.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "README.md",
-        "icon_small.png",
-        "lib/monoandroid13.0/Plugin.BLE.dll",
-        "lib/monoandroid13.0/Plugin.BLE.pdb",
-        "lib/monoandroid13.0/Plugin.BLE.xml",
-        "lib/net7.0-android33.0/Plugin.BLE.dll",
-        "lib/net7.0-android33.0/Plugin.BLE.pdb",
-        "lib/net7.0-android33.0/Plugin.BLE.xml",
-        "lib/net7.0-ios16.1/Plugin.BLE.dll",
-        "lib/net7.0-ios16.1/Plugin.BLE.pdb",
-        "lib/net7.0-ios16.1/Plugin.BLE.xml",
-        "lib/net7.0-maccatalyst16.1/Plugin.BLE.dll",
-        "lib/net7.0-maccatalyst16.1/Plugin.BLE.pdb",
-        "lib/net7.0-maccatalyst16.1/Plugin.BLE.xml",
-        "lib/net7.0-windows10.0.19041/Plugin.BLE.dll",
-        "lib/net7.0-windows10.0.19041/Plugin.BLE.pdb",
-        "lib/net7.0-windows10.0.19041/Plugin.BLE.xml",
-        "lib/net8.0-android34.0/Plugin.BLE.dll",
-        "lib/net8.0-android34.0/Plugin.BLE.pdb",
-        "lib/net8.0-android34.0/Plugin.BLE.xml",
-        "lib/net8.0-ios17.2/Plugin.BLE.dll",
-        "lib/net8.0-ios17.2/Plugin.BLE.pdb",
-        "lib/net8.0-ios17.2/Plugin.BLE.xml",
-        "lib/net8.0-maccatalyst17.2/Plugin.BLE.dll",
-        "lib/net8.0-maccatalyst17.2/Plugin.BLE.pdb",
-        "lib/net8.0-maccatalyst17.2/Plugin.BLE.xml",
-        "lib/net8.0-windows10.0.19041/Plugin.BLE.dll",
-        "lib/net8.0-windows10.0.19041/Plugin.BLE.pdb",
-        "lib/net8.0-windows10.0.19041/Plugin.BLE.xml",
-        "lib/net8.0-windows10.0.22000/Plugin.BLE.dll",
-        "lib/net8.0-windows10.0.22000/Plugin.BLE.pdb",
-        "lib/net8.0-windows10.0.22000/Plugin.BLE.xml",
-        "lib/netstandard2.0/Plugin.BLE.dll",
-        "lib/netstandard2.0/Plugin.BLE.pdb",
-        "lib/netstandard2.0/Plugin.BLE.xml",
-        "lib/uap10.0.17763/Plugin.BLE.dll",
-        "lib/uap10.0.17763/Plugin.BLE.pdb",
-        "lib/uap10.0.17763/Plugin.BLE.pri",
-        "lib/uap10.0.17763/Plugin.BLE.xml",
-        "lib/xamarinios10/Plugin.BLE.dll",
-        "lib/xamarinios10/Plugin.BLE.pdb",
-        "lib/xamarinios10/Plugin.BLE.xml",
-        "lib/xamarinmac20/Plugin.BLE.dll",
-        "lib/xamarinmac20/Plugin.BLE.pdb",
-        "lib/xamarinmac20/Plugin.BLE.xml",
-        "plugin.ble.3.1.0.nupkg.sha512",
-        "plugin.ble.nuspec"
-      ]
-    },
     "SkiaSharp/3.118.0-preview.2.3": {
       "sha512": "Y/dkGf9iIeP9Tk6Bv1CGMoJD65NaRXSwTQ0ZwfNEhtb/oAHrOTPNcea2b5lD48SunwghDMLPBiDtP41WwIIptg==",
       "type": "package",
@@ -10589,7 +10494,6 @@
       "Microsoft.Extensions.Logging.Debug >= 10.0.0-preview.1.25080.5",
       "Microsoft.Maui.Controls >= 9.0.50",
       "Microsoft.NET.ILLink.Tasks >= 9.0.3",
-      "Plugin.BLE >= 3.1.0",
       "SkiaSharp >= 3.118.0-preview.2.3"
     ]
   },
@@ -10664,10 +10568,6 @@
             "target": "Package",
             "version": "[9.0.3, )",
             "autoReferenced": true
-          },
-          "Plugin.BLE": {
-            "target": "Package",
-            "version": "[3.1.0, )"
           },
           "SkiaSharp": {
             "target": "Package",
