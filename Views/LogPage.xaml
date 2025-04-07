@@ -4,12 +4,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="clr-namespace:BackpackControllerApp.Models"
              x:Class="BackpackControllerApp.Views.LogPage">
-
-    <Border Style="{StaticResource MainBorder}">
+    <Border>
         <CollectionView ItemsSource="{Binding Logs}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:LogEntry">
-                    <Border Style="{StaticResource MainBorder}">
+                    <Border BackgroundColor="#101010" >
                         <StackLayout>
                             <Label Text="{Binding Timestamp, StringFormat='{0:HH:mm:ss}'}"
                                    FontSize="Small"

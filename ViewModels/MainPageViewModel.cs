@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using BackpackControllerApp.Enums;
+using BackpackControllerApp.Models;
 using BackpackControllerApp.Services.Interfaces;
 
 namespace BackpackControllerApp.ViewModels;
@@ -10,16 +11,21 @@ namespace BackpackControllerApp.ViewModels;
 public sealed class MainPageViewModel : INotifyPropertyChanged
 {
     public ObservableCollection<string> Files => _storageService.Files;
-    public ObservableCollection<string> Thumbnails => _storageService.Thumbnails;
+
+    public ObservableCollection<ThumbnailData> Thumbnails => _storageService.Thumbnails;
+
     public string BluetoothStatus => _bluetoothService.IsConnected;
     public string SelectedImage { get; set; }
 
     private readonly IStorageService _storageService;
+
     private readonly ILoggingService _loggingService;
+
     private readonly IBluetoothService _bluetoothService;
     private readonly IImageService _imageService;
-    
+
     public ICommand UploadCommand { get; private set; }
+
 
     public MainPageViewModel(ILoggingService loggingService, IBluetoothService bluetoothService,
         IImageService imageService, IStorageService storageService)
@@ -28,7 +34,7 @@ public sealed class MainPageViewModel : INotifyPropertyChanged
         _bluetoothService = bluetoothService;
         _imageService = imageService;
         _storageService = storageService;
-        
+
         SelectedImage = "";
 
         Thumbnails.CollectionChanged += (sender, args) => OnPropertyChanged(nameof(Thumbnails));
@@ -66,9 +72,9 @@ public sealed class MainPageViewModel : INotifyPropertyChanged
             return;
         }
 
-        var processedFile = await _imageService.ProcessFile(file);
+//await _storageService.SaveFile(file);
 
-        processedFile.Name = Guid.NewGuid();
+        var processedFile = await _imageService.ProcessFile(file);
 
         await _storageService.SaveFile(processedFile);
     }

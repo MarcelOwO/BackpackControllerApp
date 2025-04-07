@@ -3,35 +3,42 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:models="clr-namespace:BackpackControllerApp.Models"
              x:Class="BackpackControllerApp.Views.MainPage">
 
-    <Border Style="{StaticResource MainBorder}">
+    <Border>
         <VerticalStackLayout>
-            <Border Style="{StaticResource MainBorder}">
+            <Border>
                 <HorizontalStackLayout>
                     <Image
                         Source="{Binding SelectedImage }"
-                        HeightRequest="185"
+                        HeightRequest="100"
                         Aspect="AspectFit" />
                     <Label Text="{Binding BluetoothStatus}" />
                 </HorizontalStackLayout>
             </Border>
 
-            <Border Style="{StaticResource MainBorder}">
+            <Border>
                 <Button
-                    x:Name="UploadButton"
                     Text="Upload File"
                     Command="{Binding UploadCommand}"
                     HorizontalOptions="Fill" />
             </Border>
 
-            <Border Style="{StaticResource MainBorder}">
+            <Border BackgroundColor="#131313">
                 <CollectionView ItemsSource="{Binding Thumbnails}">
                     <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="system:String">
+                        <DataTemplate x:DataType="models:ThumbnailData">
                             <HorizontalStackLayout>
-                                <Image Source="{Binding .}" HeightRequest="100" WidthRequest="100" Aspect="AspectFit" />
-                                <Label Text="{Binding .}" />
+                                <Image Source="{Binding Path}" HeightRequest="100" WidthRequest="100"
+                                       Aspect="AspectFit" />
+                                <VerticalAlignment>
+                                    <Label Text="{Binding Name}" />
+                                    <HorizontalAlignment>
+                                        <ImageButton />
+                                        <Image HeightRequest="50" WidthRequest="50"/>
+                                    </HorizontalAlignment>
+                                </VerticalAlignment>
                             </HorizontalStackLayout>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>

@@ -6,8 +6,8 @@ namespace BackpackControllerApp.Services.Interfaces;
 public interface IStorageService
 {
     Task SaveFile(ProcessedFile file);
-    
+    Task SaveFile(FileResult file);
     ObservableCollection<string> Files { get; set; }
     
-    ObservableCollection<string> Thumbnails { get; set; }
+    ObservableCollection<ThumbnailData> Thumbnails { get; set; }
 }

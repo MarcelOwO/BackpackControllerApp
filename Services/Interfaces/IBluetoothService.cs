@@ -1,6 +1,6 @@
 namespace BackpackControllerApp.Services.Interfaces;
 
-public class IBluetoothService
+public interface IBluetoothService
 {
-    public required string IsConnected { get; set; }
+    public string IsConnected { get; set; }
 }

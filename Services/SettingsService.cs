@@ -4,4 +4,5 @@ namespace BackpackControllerApp.Services;
 
 public class SettingsService : ISettingsService
 {
+    
 }
