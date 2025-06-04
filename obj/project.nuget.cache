@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "XCdW/zisD4E=",
+  "dgSpecHash": "jkeRhtjmskc=",
   "success": true,
-  "projectFilePath": "C:\\Users\\marce\\Projects\\BackpackControllerApp\\BackpackControllerApp.csproj",
+  "projectFilePath": "D:\\Projects\\BackpackControllerApp\\BackpackControllerApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\marce\\.nuget\\packages\\ffmpeg.autogen\\7.0.0\\ffmpeg.autogen.7.0.0.nupkg.sha512",
+    "C:\\Users\\marce\\.nuget\\packages\\google.protobuf\\3.31.0\\google.protobuf.3.31.0.nupkg.sha512",
     "C:\\Users\\marce\\.nuget\\packages\\googlegson\\2.11.0.5\\googlegson.2.11.0.5.nupkg.sha512",
     "C:\\Users\\marce\\.nuget\\packages\\microsoft.extensions.configuration\\9.0.0\\microsoft.extensions.configuration.9.0.0.nupkg.sha512",
     "C:\\Users\\marce\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\9.0.0\\microsoft.extensions.configuration.abstractions.9.0.0.nupkg.sha512",
@@ -23,7 +24,7 @@
     "C:\\Users\\marce\\.nuget\\packages\\microsoft.maui.essentials\\9.0.50\\microsoft.maui.essentials.9.0.50.nupkg.sha512",
     "C:\\Users\\marce\\.nuget\\packages\\microsoft.maui.graphics\\9.0.50\\microsoft.maui.graphics.9.0.50.nupkg.sha512",
     "C:\\Users\\marce\\.nuget\\packages\\microsoft.maui.resizetizer\\9.0.50\\microsoft.maui.resizetizer.9.0.50.nupkg.sha512",
-    "C:\\Users\\marce\\.nuget\\packages\\microsoft.net.illink.tasks\\9.0.3\\microsoft.net.illink.tasks.9.0.3.nupkg.sha512",
+    "C:\\Users\\marce\\.nuget\\packages\\microsoft.net.illink.tasks\\9.0.5\\microsoft.net.illink.tasks.9.0.5.nupkg.sha512",
     "C:\\Users\\marce\\.nuget\\packages\\skiasharp\\3.118.0-preview.2.3\\skiasharp.3.118.0-preview.2.3.nupkg.sha512",
     "C:\\Users\\marce\\.nuget\\packages\\skiasharp.nativeassets.android\\3.118.0-preview.2.3\\skiasharp.nativeassets.android.3.118.0-preview.2.3.nupkg.sha512",
     "C:\\Users\\marce\\.nuget\\packages\\system.diagnostics.diagnosticsource\\10.0.0-preview.1.25080.5\\system.diagnostics.diagnosticsource.10.0.0-preview.1.25080.5.nupkg.sha512",
@@ -116,7 +117,8 @@
     "C:\\Users\\marce\\.nuget\\packages\\xamarin.kotlinx.coroutines.core\\1.9.0.2\\xamarin.kotlinx.coroutines.core.1.9.0.2.nupkg.sha512",
     "C:\\Users\\marce\\.nuget\\packages\\xamarin.kotlinx.coroutines.core.jvm\\1.9.0.2\\xamarin.kotlinx.coroutines.core.jvm.1.9.0.2.nupkg.sha512",
     "C:\\Users\\marce\\.nuget\\packages\\xamarin.kotlinx.serialization.core\\1.7.3.2\\xamarin.kotlinx.serialization.core.1.7.3.2.nupkg.sha512",
-    "C:\\Users\\marce\\.nuget\\packages\\xamarin.kotlinx.serialization.core.jvm\\1.7.3.2\\xamarin.kotlinx.serialization.core.jvm.1.7.3.2.nupkg.sha512"
+    "C:\\Users\\marce\\.nuget\\packages\\xamarin.kotlinx.serialization.core.jvm\\1.7.3.2\\xamarin.kotlinx.serialization.core.jvm.1.7.3.2.nupkg.sha512",
+    "C:\\Users\\marce\\.nuget\\packages\\zstdsharp.port\\0.8.5\\zstdsharp.port.0.8.5.nupkg.sha512"
   ],
   "logs": []
 }

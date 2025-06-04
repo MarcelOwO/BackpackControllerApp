@@ -4,6 +4,7 @@ public class MonoPackageManager_Resources {
 		/* We need to ensure that "BackpackControllerApp.dll" comes first in this list. */
 		"BackpackControllerApp.dll",
 		"FFmpeg.AutoGen.dll",
+		"Google.Protobuf.dll",
 		"GoogleGson.dll",
 		"Microsoft.Extensions.Configuration.dll",
 		"Microsoft.Extensions.Configuration.Abstractions.dll",
@@ -111,6 +112,7 @@ public class MonoPackageManager_Resources {
 		"Xamarin.KotlinX.Coroutines.Core.Jvm.dll",
 		"Xamarin.KotlinX.Serialization.Core.dll",
 		"Xamarin.KotlinX.Serialization.Core.Jvm.dll",
+		"ZstdSharp.dll",
 		"Microsoft.Maui.Controls.resources.dll",
 		"Microsoft.Maui.Controls.resources.dll",
 		"Microsoft.Maui.Controls.resources.dll",

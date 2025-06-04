@@ -1,7 +1,7 @@
 ﻿namespace BackpackControllerApp.Enums;
 
-public enum PacketType
+public enum PacketType : byte
 {
-    Command,
-    File,
+    Command = 0,
+    File = 1,
 }

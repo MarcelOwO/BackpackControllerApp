@@ -6,45 +6,80 @@
              xmlns:models="clr-namespace:BackpackControllerApp.Models"
              x:Class="BackpackControllerApp.Views.MainPage">
 
-    <Border>
-        <VerticalStackLayout>
-            <Border>
-                <HorizontalStackLayout>
+    <VerticalStackLayout>
+        <Border
+            BackgroundColor="{StaticResource DarkGray}">
+            <HorizontalStackLayout>
+                <Border Padding="0" BackgroundColor="{StaticResource LightGray}">
                     <Image
                         Source="{Binding SelectedImage }"
-                        HeightRequest="100"
+                        HeightRequest="150"
+                        WidthRequest="150"
                         Aspect="AspectFit" />
-                    <Label Text="{Binding BluetoothStatus}" />
-                </HorizontalStackLayout>
-            </Border>
+                </Border>
+                <Border>
+                    <Label TextColor="{StaticResource Accent}" Text="{Binding BluetoothStatus}" />
+                </Border>
+                <!--<Button Text="Try Connect" Command="{Binding ConnectCommand}" />-->
+            </HorizontalStackLayout>
+        </Border>
+        <Border Padding="0">
+            <Button
+                Text="Upload File"
+                BackgroundColor="{StaticResource Accent}"
+                TextColor="{StaticResource Black}"
+                Command="{Binding AddFileCommand}"
+                HorizontalOptions="Fill" />
+        </Border>
+        <Border>
+            <Grid ColumnDefinitions="4*,1*" VerticalOptions="Center">
+                <ProgressBar Progress="{Binding UploadProgress}"
+                             HeightRequest="10" Margin="10" />
+                <Button Text="Cancel"
+                        TextColor="{StaticResource Black}"
+                        Command=""/>
+            </Grid>
 
-            <Border>
-                <Button
-                    Text="Upload File"
-                    Command="{Binding UploadCommand}"
-                    HorizontalOptions="Fill" />
-            </Border>
 
-            <Border BackgroundColor="#131313">
-                <CollectionView ItemsSource="{Binding Thumbnails}">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="models:ThumbnailData">
+        </Border>
+
+        <Border BackgroundColor="{StaticResource DarkGray}">
+            <CollectionView ItemsSource="{Binding Files}" HeightRequest="600">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:SavedFile">
+                        <Border BackgroundColor="{StaticResource Black}">
                             <HorizontalStackLayout>
-                                <Image Source="{Binding Path}" HeightRequest="100" WidthRequest="100"
-                                       Aspect="AspectFit" />
-                                <VerticalAlignment>
-                                    <Label Text="{Binding Name}" />
-                                    <HorizontalAlignment>
-                                        <ImageButton />
-                                        <Image HeightRequest="50" WidthRequest="50"/>
-                                    </HorizontalAlignment>
-                                </VerticalAlignment>
+                                <Border Padding="0">
+                                    <Image Source="{Binding ThumbnailPath}" HeightRequest="100" WidthRequest="100"
+                                           Aspect="AspectFit" />
+                                </Border>
+                                <VerticalStackLayout>
+                                    <HorizontalStackLayout>
+                                        <Button
+                                            Text="Select"
+                                            TextColor="{StaticResource Black}"
+                                            BackgroundColor="{StaticResource LightGray}"
+                                            Command="{Binding  Source={RelativeSource AncestorType={x:Type ContentPage}},Path=BindingContext.SetSelectedImageCommand}"
+                                            CommandParameter="{Binding }" />
+                                        <Button
+                                            Text="Remove"
+                                            TextColor="{StaticResource Black}"
+                                            BackgroundColor="{StaticResource LightGray}"
+                                            Command="{Binding  Source={RelativeSource AncestorType={x:Type ContentPage}},Path=BindingContext.RemoveImageCommand}"
+                                            CommandParameter="{Binding .}" />
+                                        <Button
+                                            Text="Upload"
+                                            TextColor="{StaticResource Black}"
+                                            BackgroundColor="{StaticResource LightGray}"
+                                            Command="{Binding  Source={RelativeSource AncestorType={x:Type ContentPage}},Path=BindingContext.UploadImageCommand}"
+                                            CommandParameter="{Binding .}" />
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
                             </HorizontalStackLayout>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </Border>
-
-        </VerticalStackLayout>
-    </Border>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Border>
+    </VerticalStackLayout>
 </ContentPage>

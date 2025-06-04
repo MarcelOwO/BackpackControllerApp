@@ -1,9 +1,31 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <Color x:Key="Accent"> #f1c388</Color>
+    <Color x:Key="Bright"> #e3ecfe</Color>
+    <Color x:Key="LightGray"> #8d97ac</Color>
+    <Color x:Key="DarkGray"> #3a455c</Color>
+    <Color x:Key="Black"> #13171f</Color>
+
     <Style TargetType="Border">
-        <Setter Property="Padding" Value="10" />
-        <Setter Property="Margin" Value="10" />
-        <Setter Property="BackgroundColor" Value="#232323" />
-        <Setter Property="StrokeShape" Value="RoundRectangle 20,20,20,20" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="BackgroundColor" Value="{StaticResource Black}" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 10,10,10,10" />
     </Style>
+    
+    <Style TargetType="TabBar">
+        <Setter Property="Shell.TabBarBackgroundColor"
+                Value="{StaticResource Black}" />
+        <Setter Property="Shell.TabBarTitleColor"
+                Value="{StaticResource Accent}" />
+        <Setter Property="Shell.TabBarUnselectedColor"
+                Value="{StaticResource LightGray}" />
+    </Style>
+    
+    <Style TargetType="ContentPage">
+        <Setter Property="BackgroundColor" Value="{StaticResource Black}" />
+    </Style>
+
+
 </ResourceDictionary>

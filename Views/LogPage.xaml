@@ -4,21 +4,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="clr-namespace:BackpackControllerApp.Models"
              x:Class="BackpackControllerApp.Views.LogPage">
-    <Border>
         <CollectionView ItemsSource="{Binding Logs}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:LogEntry">
-                    <Border BackgroundColor="#101010" >
+                    <Border BackgroundColor="{StaticResource Black}">
                         <StackLayout>
                             <Label Text="{Binding Timestamp, StringFormat='{0:HH:mm:ss}'}"
+                                   TextColor="{StaticResource Accent}"
                                    FontSize="Small"
                                    VerticalOptions="Center" />
                             <Label Text="{Binding Level}"
+                                   TextColor="{StaticResource Accent}"
                                    FontSize="Small"
                                    Margin="5,0,0,0"
-                                   VerticalOptions="Center"
-                                   TextColor="{Binding Level}" />
+                                   VerticalOptions="Center" />
                             <Label Text="{Binding Message}"
+                                   TextColor="{Binding Level}"
                                    FontSize="Small"
                                    Margin="10,0,0,0"
                                    VerticalOptions="Center" />
@@ -27,5 +28,4 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-    </Border>
 </ContentPage>

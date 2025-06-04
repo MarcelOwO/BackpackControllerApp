@@ -16,8 +16,8 @@ public class StorageService : IStorageService
 
     private readonly ILoggingService _loggingService;
 
-    public ObservableCollection<string> Files { get; set; } = [];
-    public ObservableCollection<ThumbnailData> Thumbnails { get; set; } = [];
+
+    public ObservableCollection<SavedFile> SavedFiles { get; set; } = [];
 
     public StorageService(ILoggingService loggingService)
     {
@@ -38,65 +38,74 @@ public class StorageService : IStorageService
             Directory.CreateDirectory(_uploadedDirectory);
         }
 
-        //replace late with proper settings/persistance file
 
         var thumbnails = Directory.GetFiles(_thumbnailDirectory);
-
-        foreach (var file in thumbnails)
-        {
-            Thumbnails.Add(new ThumbnailData()
-            {
-                Name = Path.GetFileName(file),
-                Path = file
-            });
-        }
-
         var files = Directory.GetFiles(_uploadedDirectory);
 
-        foreach (var file in files)
+        foreach (var thumbnail in thumbnails)
         {
-            Files.Add(file);
-        }
+            var thumbnailName = Path.GetFileName(thumbnail);
 
+            foreach (var fullFile in files)
+            {
+                var fullFileName = Path.GetFileName(fullFile);
+
+                if (thumbnailName != fullFileName)
+                    continue;
+                SavedFiles.Add(new SavedFile()
+                {
+                    Name = fullFileName,
+                    OriginalPath = fullFile,
+                    ThumbnailPath = thumbnail
+                });
+            }
+        }
 
         _loggingService.Log(LogLevel.Info, "StorageController initialized", "StorageController");
     }
 
-    public async Task SaveFile(FileResult file)
+    public void RemoveFile(SavedFile fileToRemove)
     {
-        _loggingService.Log(LogLevel.Info, "Saving file", "StorageController");
+        try
+        {
+            var copy = fileToRemove;
+            if (!SavedFiles.Remove(fileToRemove))
+            {
+                _loggingService.Log(LogLevel.Error, "File not found in saved files", "StorageController");
+                return;
+            }
 
-        await using var fileStream = new FileStream(file.FullPath, FileMode.Open);
-
-        var newFile = new FileInfo(Path.Combine(_uploadedDirectory, file.FileName));
-        var newThumbnail = new FileInfo(Path.Combine(_thumbnailDirectory, file.FileName));
-
-        await fileStream.CopyToAsync(newFile.OpenWrite());
-
-
-        Files.Add(newFile.FullName);
+            File.Delete(fileToRemove.OriginalPath);
+            File.Delete(fileToRemove.ThumbnailPath);
+        }
+        catch (Exception e)
+        {
+            _loggingService.Log(LogLevel.Error, e.Message, "StorageController");
+        }
     }
+
 
     public async Task SaveFile(ProcessedFile file)
     {
         _loggingService.Log(LogLevel.Info, "Saving file", "StorageController");
+        var fileName = file.Name;
 
         using var fileStream = file.FileTask;
         using var thumbnailStream = file.ThumbnailTask;
 
-        var newFile = new FileInfo(Path.Combine(_uploadedDirectory, file.Name.ToString()));
-        var newThumbnail = new FileInfo(Path.Combine(_thumbnailDirectory, file.Name.ToString()));
+        var newFile = new FileInfo(Path.Combine(_uploadedDirectory, fileName));
+        var newThumbnail = new FileInfo(Path.Combine(_thumbnailDirectory, fileName));
 
-        var a = (await fileStream).CopyToAsync(newFile.OpenWrite());
-        var b = (await thumbnailStream).CopyToAsync(newThumbnail.OpenWrite());
+        var saveFileTask = (await fileStream).CopyToAsync(newFile.OpenWrite());
+        var saveThumbnailTask = (await thumbnailStream).CopyToAsync(newThumbnail.OpenWrite());
 
-        await Task.WhenAll(a, b);
+        await Task.WhenAll(saveFileTask, saveThumbnailTask);
 
-        Files.Add(newFile.FullName);
-        Thumbnails.Add(new ThumbnailData()
+        SavedFiles.Add(new SavedFile()
         {
-            Name = newFile.Name,
-            Path = newThumbnail.FullName
+            Name = fileName,
+            OriginalPath = newFile.FullName,
+            ThumbnailPath = newThumbnail.FullName,
         });
     }
 }

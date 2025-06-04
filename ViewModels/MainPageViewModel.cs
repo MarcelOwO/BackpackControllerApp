@@ -10,22 +10,24 @@ namespace BackpackControllerApp.ViewModels;
 
 public sealed class MainPageViewModel : INotifyPropertyChanged
 {
-    public ObservableCollection<string> Files => _storageService.Files;
-
-    public ObservableCollection<ThumbnailData> Thumbnails => _storageService.Thumbnails;
+    public ObservableCollection<SavedFile> Files => _storageService.SavedFiles;
 
     public string BluetoothStatus => _bluetoothService.IsConnected;
     public string SelectedImage { get; set; }
+    public double UploadProgress { get; set; }
 
     private readonly IStorageService _storageService;
-
     private readonly ILoggingService _loggingService;
-
     private readonly IBluetoothService _bluetoothService;
     private readonly IImageService _imageService;
 
-    public ICommand UploadCommand { get; private set; }
+    private CancellationTokenSource? _cancellationTokenSource;
 
+    public ICommand CancelUpload { get; private set; }
+    public ICommand AddFileCommand { get; private set; }
+    public ICommand SetSelectedImageCommand { get; private set; }
+    public ICommand RemoveImageCommand { get; private set; }
+    public ICommand UploadImageCommand { get; private set; }
 
     public MainPageViewModel(ILoggingService loggingService, IBluetoothService bluetoothService,
         IImageService imageService, IStorageService storageService)
@@ -37,10 +39,9 @@ public sealed class MainPageViewModel : INotifyPropertyChanged
 
         SelectedImage = "";
 
-        Thumbnails.CollectionChanged += (sender, args) => OnPropertyChanged(nameof(Thumbnails));
         Files.CollectionChanged += (sender, args) => OnPropertyChanged(nameof(Files));
 
-        UploadCommand = new Command(async void () =>
+        AddFileCommand = new Command(async void () =>
         {
             try
             {
@@ -50,6 +51,64 @@ public sealed class MainPageViewModel : INotifyPropertyChanged
             {
                 _loggingService.Log(LogLevel.Error, e.Message, "MainPage");
             }
+        });
+
+        CancelUpload = new Command(async () =>
+        {
+            if (_cancellationTokenSource != null)
+                await _cancellationTokenSource.CancelAsync();
+        });
+
+        UploadImageCommand = new Command<SavedFile>(async void (savedFile) =>
+        {
+            await _bluetoothService.SendFile(new FileBluetoothPacket()
+                {
+                    FileName = savedFile.Name,
+                    Data = (await File.ReadAllBytesAsync(savedFile.OriginalPath)).ToList(),
+                    Type = PacketType.File
+                }, _cancellationTokenSource?.Token
+                , new Progress<double>(value =>
+                {
+                    UploadProgress = value;
+                    OnPropertyChanged(nameof(UploadProgress));
+                }));
+        });
+
+        SetSelectedImageCommand = new Command<SavedFile>(async file =>
+        {
+            if (file == null)
+            {
+                _loggingService.Log(LogLevel.Warning, "No image selected", "MainPage");
+                return;
+            }
+
+            SelectedImage = file.ThumbnailPath;
+            OnPropertyChanged(nameof(SelectedImage));
+
+            await _bluetoothService.SendCommand(new CommandBluetoothPacket
+            {
+                Command = $"Select:{file.Name}",
+                Type = PacketType.Command,
+            });
+        });
+
+        RemoveImageCommand = new Command<SavedFile>(file =>
+        {
+            if (file == null)
+            {
+                _loggingService.Log(LogLevel.Warning, "No image selected", "MainPage");
+                return;
+            }
+
+            storageService.RemoveFile(file);
+
+            OnPropertyChanged(nameof(Files));
+
+            _bluetoothService.SendCommand(new CommandBluetoothPacket()
+            {
+                Command = $"Delete:{file.Name}",
+                Type = PacketType.Command
+            });
         });
     }
 
@@ -71,8 +130,6 @@ public sealed class MainPageViewModel : INotifyPropertyChanged
             _loggingService.Log(LogLevel.Warning, "No file selected", "MainPage");
             return;
         }
-
-//await _storageService.SaveFile(file);
 
         var processedFile = await _imageService.ProcessFile(file);
 

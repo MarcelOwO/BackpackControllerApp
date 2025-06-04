@@ -17,6 +17,7 @@ public class ImageService : IImageService
 
     public async Task<ProcessedFile> ProcessFile(FileResult fileResult)
     {
+        var fileName = Guid.NewGuid().ToString() + "." + fileResult.ContentType.Split('/')[1];
         if (fileResult.ContentType.Contains("image"))
         {
             _loggingService.Log(LogLevel.Info, "Processing image", "ImageController");
@@ -24,7 +25,7 @@ public class ImageService : IImageService
             var processedImage = await ProcessImage(fileResult);
             var fileTask = processedImage.OpenReadAsync();
             var thumbnailData = CreateImageThumbnail(fileResult);
-            return new ProcessedFile(type, fileTask, thumbnailData, Guid.NewGuid());
+            return new ProcessedFile(type, fileTask, thumbnailData, fileName);
         }
         else if (fileResult.ContentType.Contains("video"))
         {
@@ -34,12 +35,12 @@ public class ImageService : IImageService
             var type = "video";
             var emptyTask = new Task<Stream>(() => new MemoryStream());
 
-            return new ProcessedFile(type, emptyTask, emptyTask, Guid.NewGuid()); //not supported for now
+            return new ProcessedFile(type, emptyTask, emptyTask, fileName); //not supported for now
         }
 
         _loggingService.Log(LogLevel.Error, "Unsupported file type", "ImageController");
         var emptyTask2 = new Task<Stream>(() => new MemoryStream());
-        return new ProcessedFile("Null", emptyTask2, emptyTask2, Guid.NewGuid());
+        return new ProcessedFile("Null", emptyTask2, emptyTask2, fileName);
     }
 
     private async Task<Stream> CreateImageThumbnail(FileResult fileResult)
